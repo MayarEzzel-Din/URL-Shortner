@@ -4,14 +4,11 @@ const shortenBTN = document.getElementById('shortenBTN');
 const copyBTN = document.getElementById('copyBTN');
 const form = document.getElementById('urlForm');
 const HOST = 'http://localhost:5500/';
-let ShortURL_fix;
-let LongURL_fix;
 
 
 const shortenUrlReq = async (url) => {
     const response = await axios.post('/', { url })
-    console.log({ data: response.data })
-    return response.data['shortened-url'];
+    return response.data['ShortUrl'];
 }
 
 form.addEventListener('submit', async(event) => {
@@ -23,9 +20,11 @@ form.addEventListener('submit', async(event) => {
 
 copyBTN.addEventListener('click', (event) => {
     event.preventDefault();
-    navigator.clipboard.writeText(shortUrlElement.innerText);
-});
+    navigator.clipboard.writeText(shortUrlElement.innerText); //copies text to the clipboard.
 
+    copyBTN.style.backgroundColor = 'green'; 
+    setTimeout(()=>{ copyBTN.style.backgroundColor = '#F18989';}, 1500); 
+});
 
 LongUrlElement.addEventListener('click', () => {
     LongUrlElement.style.color = 'Black';
