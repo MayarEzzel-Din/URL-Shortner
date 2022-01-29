@@ -2,46 +2,49 @@ const PORT = 5500;
 const host = `http://localhost:${PORT}/`;
 let shortRandomString = require('shortid');
 const path = require('path');
-const mongoose = require('./database');
+const dbModel = require('./database');
+const mongoose = require('mongoose');
 const express = require('express');
-const dbModel = mongoose();
 
+mongoose.connect("mongodb+srv://admin:admin@cluster0.pqf8w.mongodb.net/urlShortner?retryWrites=true&w=majority"); //db connection
 /*Middleware */
 const app = express();
 app.use(express.json());
 app.use(express.static('public'));
 
-
+//renders the main page
 app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname,'/index.html'));
+    res.sendFile(path.join(__dirname, '/index.html'));
 });
 
+/* Using Of Urls */
 app.get('/:code', async(req, res) => {
-    const url = await dbModel.findOne({url_ID: req.params.code}); //fetch the url from db
-    if(url !== null){
+    const url = await dbModel.findOne({url_ID: req.params.code}); //fetch the url from db using url code.
+    if(url){
         url.save();
         return res.status(200).redirect(url.LongUrl); //go to full url
     }
     return res.status(404).json('NotFound'); //throw 404 error
 });
 
+/* Takes Long Url, Saves it in db, Returns short link */
 app.post('/', async(req, res) => { 
-    const shortenedUrl = shortRandomString(req.body.url);
-    const Url_Instance = new db({
-        url_ID: shortenedUrl,
-        LongUrl: req.body.url,
-        ShortUrl: host + shortenedUrl
-    });
-
-    let url = await db.findOne({LongUrl:req.body.url});
-    if(!url){
-        Url_Instance.save().then(console.log('saved'));
-        res.json({ 'shortened-url': `${host}${shortenedUrl}`});
+    try{
+        const LongUrlExistance = await dbModel.findOne({LongUrl: req.body.url}); //finds the long url in the db
+        if(!LongUrlExistance){       
+            const urlShortCode = shortRandomString(req.body.url); //generates new random string
+            const newURL = await dbModel.create({ 
+                url_ID: urlShortCode,
+                LongUrl: req.body.url,
+                ShortUrl: host + urlShortCode
+            });
+            res.json(newURL); 
+        }
+        else           
+            res.json(LongUrlExistance); //return the saved url in the db.          
+    }catch(error){
+        res.json({'ShortUrl': 'ERROR: object cannot be created'});
     }
-    else{
-        res.json({'shortened-url': shortenedUrl});
-    }
-    
 });
  
 app.listen(PORT, () => console.log(`server started, listening PORT ${PORT}`));
