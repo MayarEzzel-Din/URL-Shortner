@@ -12,5 +12,5 @@ Tips To run the project:
       - install nodemon (a live server): npm install nodemon 
       - write: npm install
       - write: npm start dev
-      -  (or use 'nodemon')
+      -  (or use 'nodemon'): nodemon server.js
 
