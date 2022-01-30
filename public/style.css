@@ -11,16 +11,6 @@ h1{
     text-shadow: black;
 }
 
-h2{
-    color: rgb(141, 66, 66);
-    background-color: lavenderblush;
-    font-size: 2rem;
-    text-align: center;
-    height: 4rem;
-    width: 35%;
-    
-}
-
 form{
     margin: 2rem;
 }
