@@ -9,4 +9,8 @@ Tips To run the project:
       - insall path: npm install path
       - install express: npm install express
       - install mongoose database: npm install mongoose
+      - install nodemon (a live server): npm install nodemon 
       - write: npm install
+      - write: npm start dev
+      -  (or use 'nodemon')
+
