@@ -4,14 +4,21 @@
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-h1, h2{
+h1{
     color: #F18989;
     font-size: 4rem;
     text-align: center;
+    text-shadow: black;
 }
 
 h2{
-    color: black;
+    color: rgb(141, 66, 66);
+    background-color: lavenderblush;
+    font-size: 2rem;
+    text-align: center;
+    height: 4rem;
+    width: 35%;
+    
 }
 
 form{
@@ -23,8 +30,6 @@ form{
     font-size: 2rem; 
 }
 
-
-  
 .container{
     width: 100vw;
     height: 100vh;
@@ -119,9 +124,11 @@ input:focus::placeholder{
     z-index: 1;
 
 }
-#shortBTN:hover .tooltiptext{
-    visibility: visible;
-}
+
 .tooltip:hover .tooltiptext {
     visibility: visible;
-  }
+}
+
+.textBox::selection{
+    background-color: lightblue;
+}
