@@ -13,4 +13,5 @@ Tips To run the project:
       - write: npm install
       - write: npm start dev
       -  (or use 'nodemon'): nodemon server.js
+  - Open your browser and use 'http://localhost:5500/'
 
